@@ -11,7 +11,7 @@
   - Cache_prt를 통해 ARP 캐시 엔트리 리스트들을 순회하여 ARP 테이블의 destination IP와 위에서 설정해둔 next_hop의 IP가 동일한 ENTRY를 찾는다. 찾았다면 해당 IP의 맥주소를 next_hop_mac에 저장하고 반복문에서 빠져나온다.
    
   - IP 헤더를 붙이는 과정에서 destination IP, source 길이, source, ttl을 설정한다. Destination ip를 destination의 길이만큼 buffer_ptr이 가르키는 곳에 메모리 카피를 한다. 카피한 후에 버퍼 포인터에 카피한 만큼의 크기를 더해서 뒤의 source len을 쓸 곳으로 포인터를 이동시킨다. source_len의 경우는 빅엔디안의 표기를 위해서 htons 함수를 통해 변환시킨 뒤에 buffer_ptr이 가르키는 곳에 넣고 또 다음의 source ip를 쓰기 위한 곳으로 buffer pointer를 이동시킨다. Source ip도 destination ip와 동일한 방식으로 진행하고 마지막에 ttl도 동일한 방식으로 설정해주고 버퍼 포인터를 이동시킨다.
-  - 
+ 
 ### 2) my_ip_forward 함수
    
   - TTL을 체크하는 부분이다. 패킷이 라우터에 도달할때마다 TTL은 1씩 감소되고, 패킷을 받고 TTL을 감소시킨 뒤에 만약 TTL이 0이 되었으면 더 이상 포워딩하지 않고 DROP된다. DROP하기 위해서 return -1을 한다.
